@@ -14,31 +14,7 @@ def getCar(LineRequest):
 #Write car to array
 def setCar(LineRequest, NewCar):
     cls()
-    arrayCars[LineRequest] = NewCar
-    EnterCommand()
-    
-#Check if user input was correct    
-def CheckCommand(Command,Check):
-    return Command.lower() == Check.lower()
-
-#Check if user input was correct    
-def CheckLine(Command,Check):
-    return int(Command) < Check
-
-#Print total Array
-def ShowList():
-    cls()
-    for (index,item) in enumerate (arrayCars, start = 0):
-        print(index,':',item)
-    EnterCommand()
-
-#Try again message
-def TryAgain():
-    print("Try again")
-    time.sleep(0.5)
-    cls()
-    EnterCommand() 
-
+  
 def cls():
     os.system('cls')
 #Get user command    
