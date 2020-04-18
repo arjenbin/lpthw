@@ -1,0 +1,4 @@
+control-B in subline tekst op hallo.py, en hij zegt hoi
+
+
+Dit was een korte handleiding
