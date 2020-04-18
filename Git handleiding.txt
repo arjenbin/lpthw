@@ -1,0 +1,3 @@
+Commit is lokaal
+
+push is naar remote repo
