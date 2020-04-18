@@ -14,11 +14,11 @@ def setCar(LineRequest, NewCar):
     
 #Check if user input was correct    
 def CheckCommand(Command,Check):
-    return Command.lower() == Check.lower():
+    return Command.lower() == Check.lower()
 
 #Check if user input was correct    
 def CheckLine(Command,Check):
-    return int(Command) < Check:
+    return int(Command) < Check
  
 #Try again message
 def TryAgain():
@@ -47,3 +47,4 @@ def EnterCommand():
         
 #Main    
 EnterCommand()
+
