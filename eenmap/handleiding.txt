@@ -2,3 +2,5 @@ control-B in subline tekst op hallo.py, en hij zegt hoi
 
 
 Dit was een korte handleiding
+
+dit is een aanpassing! ja! toch? echt waar! kim!
