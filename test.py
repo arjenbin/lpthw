@@ -1,5 +1,13 @@
 import os
 import time
+import pyodbc
+import sys
+
+conn = pyodbc.connect(r'Driver={Microsoft Access Driver (*.mdb, *.accdb)};DBQ=D:\Users\Gebruiker\Documents\Python\TestDB.accdb;')
+cursor = conn.cursor()
+
+
+
 
 #Make array with some standard cars in it
 arrayCars = ['merc', 'volvo', 'bmw']
@@ -14,7 +22,13 @@ def getCar(LineRequest):
 #Write car to array
 def setCar(LineRequest, NewCar):
     cls()
+    number = 234
     arrayCars[LineRequest] = NewCar
+
+    cursor.execute("INSERT INTO names_table (First_Name) VALUES(?)",(NewCar))          
+    #cursor.execute("INSERT INTO names_table (First_Name,Age) VALUES(?, ?)",(number, NewCar))              
+    conn.commit()
+
     EnterCommand()
     
 #Check if user input was correct    
@@ -30,6 +44,10 @@ def ShowList():
     cls()
     for (index,item) in enumerate (arrayCars, start = 0):
         print(index,':',item)
+
+    cursor.execute('select * from names_table')
+    for row in cursor.fetchall():
+        print (row.Id,row.First_Name)    
     EnterCommand()
 
 #Try again message
