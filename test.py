@@ -7,7 +7,19 @@ conn = pyodbc.connect(r'Driver={Microsoft Access Driver (*.mdb, *.accdb)};DBQ=D:
 cursor = conn.cursor()
 
 
+def Insert(Table,Collum,Value):
+    #{Table} = "dddkd"
 
+    #cursor.execute("INSERT INTO %s (Collum) VALUES(?)",(Shepherd,'djkdfhg'))        
+    #cursor.execute("INSERT INTO {0}(Table)VALUES({1});".format(Table,Value))   
+    
+    sql = '''INSERT INTO %s (%s) VALUES(%s)''' %(Table,Collum,Value)
+    print("printing", sql)
+    cursor.execute(sql)
+
+
+    #cursor.execute("INSERT INTO names_table (First_Name,Age) VALUES(?, ?)",(number, NewCar))              
+    conn.commit()
 
 #Make array with some standard cars in it
 arrayCars = ['merc', 'volvo', 'bmw']
@@ -24,10 +36,8 @@ def setCar(LineRequest, NewCar):
     cls()
     number = 234
     arrayCars[LineRequest] = NewCar
+    Insert(Table = 'names_table', Collum = 'First_Name', Value = NewCar)
 
-    cursor.execute("INSERT INTO names_table (First_Name) VALUES(?)",(NewCar))          
-    #cursor.execute("INSERT INTO names_table (First_Name,Age) VALUES(?, ?)",(number, NewCar))              
-    conn.commit()
 
     EnterCommand()
     
