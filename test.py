@@ -1,25 +1,5 @@
 import os
 import time
-import pyodbc
-import sys
-
-conn = pyodbc.connect(r'Driver={Microsoft Access Driver (*.mdb, *.accdb)};DBQ=D:\Users\Gebruiker\Documents\Python\TestDB.accdb;')
-cursor = conn.cursor()
-
-
-def Insert(Table,Collum,Value):
-    #{Table} = "dddkd"
-
-    #cursor.execute("INSERT INTO %s (Collum) VALUES(?)",(Shepherd,'djkdfhg'))        
-    #cursor.execute("INSERT INTO {0}(Table)VALUES({1});".format(Table,Value))   
-    
-    sql = '''INSERT INTO %s (%s) VALUES(%s)''' %(Table,Collum,Value)
-    print("printing", sql)
-    cursor.execute(sql)
-
-
-    #cursor.execute("INSERT INTO names_table (First_Name,Age) VALUES(?, ?)",(number, NewCar))              
-    conn.commit()
 
 #Make array with some standard cars in it
 arrayCars = ['merc', 'volvo', 'bmw']
@@ -34,11 +14,7 @@ def getCar(LineRequest):
 #Write car to array
 def setCar(LineRequest, NewCar):
     cls()
-    number = 234
     arrayCars[LineRequest] = NewCar
-    Insert(Table = 'names_table', Collum = 'First_Name', Value = NewCar)
-
-
     EnterCommand()
     
 #Check if user input was correct    
@@ -54,10 +30,6 @@ def ShowList():
     cls()
     for (index,item) in enumerate (arrayCars, start = 0):
         print(index,':',item)
-
-    cursor.execute('select * from names_table')
-    for row in cursor.fetchall():
-        print (row.Id,row.First_Name)    
     EnterCommand()
 
 #Try again message
