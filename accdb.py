@@ -3,20 +3,25 @@ import time
 import pyodbc
 import sys
 
-conn = pyodbc.connect(r'Driver={Microsoft Access Driver (*.mdb, *.accdb)};DBQ=C:\Users\Gebruiker\lpthw\TestDB.accdb;')
+conn = pyodbc.connect(r'Driver={Microsoft Access Driver (*.mdb, *.accdb)};DBQ=D:\Users\Gebruiker\Documents\Python\TestDB.accdb;')
 cursor = conn.cursor()
 
 
-def Insert(Table,Collum,Value):
+def Insert(Table,Collum,Value,Id):
     
     sql = ('''INSERT INTO %s (%s)
-    	      VALUES(?) WHERE 'Id' = 3
+    	      VALUES(?)
     	      ''')%(Table,Collum)
-    
+
     cursor.execute(sql,Value)             
     conn.commit()
 
 
+def deleteRow(Id):
+	sql = ('''delete from names_table where Id = ?''','Id')
+	print(sql)
+	cursor.execute(sql,Id)
+	conn.commit()
 
 #Get car from array
 def getCar(LineRequest):
@@ -28,10 +33,9 @@ def getCar(LineRequest):
 #Write car to array
 def setCar(LineRequest, NewCar):
     cls()
-    #number = 234
-    #rrayCars[LineRequest] = NewCar
     Insert(Table = 'names_table', Collum = 'First_Name', Value = NewCar)
-
+    
+   
 
     EnterCommand()
     
@@ -71,6 +75,7 @@ def EnterCommand():
     '-----------------\n'
     'Request Car = R\n'
     'Edit Car = E\n'
+    'Delete Car = D\n'
     'Show List = L\n')
     
     #-----Wait for user command-----#
@@ -85,6 +90,12 @@ def EnterCommand():
         if CheckLine(LineRequest,100):
             NewCar = input('enter new Car brand:')
             setCar(int(LineRequest),NewCar)
+        else:
+            TryAgain()
+    if CheckCommand(UserCommand,'d'):
+        LineRequest = input('enter line request:')
+        if CheckLine(LineRequest,100):
+            deleteRow(int(LineRequest))
         else:
             TryAgain()
     if CheckCommand(UserCommand,'l'):
