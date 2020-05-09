@@ -3,25 +3,32 @@ import time
 import pyodbc
 import sys
 
-conn = pyodbc.connect(r'Driver={Microsoft Access Driver (*.mdb, *.accdb)};DBQ=D:\Users\Gebruiker\Documents\Python\TestDB.accdb;')
+conn = pyodbc.connect(r'Driver={Microsoft Access Driver (*.mdb, *.accdb)};DBQ=C:\Users\Gebruiker\lpthw\TestDB.accdb;')
 cursor = conn.cursor()
 
 
-def Insert(Table,Collum,Value,Id):
+def Insert(Table,Collum,Value):
     
     sql = ('''INSERT INTO %s (%s)
     	      VALUES(?)
     	      ''')%(Table,Collum)
-
+    
     cursor.execute(sql,Value)             
     conn.commit()
 
 
-def deleteRow(Id):
-	sql = ('''delete from names_table where Id = ?''','Id')
-	print(sql)
-	cursor.execute(sql,Id)
+def deleteCar(LineRequest,Table,Collum):
+	sql = ('''delete from %s where (%s) = (%s)''')%(Table,Collum,LineRequest)
+	cursor.execute(sql)
 	conn.commit()
+
+def deleteName(LineRequest,Table,Collum):
+	sql = ('''delete from names_table where First_Name="Mike"''')
+	print(sql)
+	time.sleep(1)
+	cursor.execute('''delete from names_table where First_Name="234"''')
+	conn.commit()
+
 
 #Get car from array
 def getCar(LineRequest):
@@ -33,9 +40,10 @@ def getCar(LineRequest):
 #Write car to array
 def setCar(LineRequest, NewCar):
     cls()
+    #number = 234
+    #rrayCars[LineRequest] = NewCar
     Insert(Table = 'names_table', Collum = 'First_Name', Value = NewCar)
-    
-   
+
 
     EnterCommand()
     
@@ -75,7 +83,6 @@ def EnterCommand():
     '-----------------\n'
     'Request Car = R\n'
     'Edit Car = E\n'
-    'Delete Car = D\n'
     'Show List = L\n')
     
     #-----Wait for user command-----#
@@ -92,17 +99,21 @@ def EnterCommand():
             setCar(int(LineRequest),NewCar)
         else:
             TryAgain()
-    if CheckCommand(UserCommand,'d'):
-        LineRequest = input('enter line request:')
-        if CheckLine(LineRequest,100):
-            deleteRow(int(LineRequest))
-        else:
-            TryAgain()
     if CheckCommand(UserCommand,'l'):
             ShowList()
+
+    if CheckCommand(UserCommand,'d'):
+        LineRequest = input('enter line to delete:')
+        if CheckLine(LineRequest,100):
+            deleteCar(LineRequest,Table='names_table',Collum ='Id')
+        else:
+            TryAgain()
+    if CheckCommand(UserCommand,'f'):
+        LineRequest = input('enter name to delete:')
+        deleteName(LineRequest,Table='names_table',Collum ='First_Name')
     else:
         TryAgain()
-        
+
 #Main    
 EnterCommand()
 
