@@ -3,26 +3,32 @@ import time
 import pyodbc
 import sys
 
-conn = pyodbc.connect(r'Driver={Microsoft Access Driver (*.mdb, *.accdb)};DBQ=D:\Users\Gebruiker\Documents\Python\TestDB.accdb;')
+conn = pyodbc.connect(r'Driver={Microsoft Access Driver (*.mdb, *.accdb)};DBQ=C:\Users\Gebruiker\lpthw\TestDB.accdb;')
 cursor = conn.cursor()
 
 
 def Insert(Table,Collum,Value):
-    #{Table} = "dddkd"
-
-    #cursor.execute("INSERT INTO %s (Collum) VALUES(?)",(Shepherd,'djkdfhg'))        
-    #cursor.execute("INSERT INTO {0}(Table)VALUES({1});".format(Table,Value))   
     
-    sql = '''INSERT INTO %s (%s) VALUES(%s)''' %(Table,Collum,Value)
-    print("printing", sql)
-    cursor.execute(sql)
-
-
-    #cursor.execute("INSERT INTO names_table (First_Name,Age) VALUES(?, ?)",(number, NewCar))              
+    sql = ('''INSERT INTO %s (%s)
+    	      VALUES(?)
+    	      ''')%(Table,Collum)
+    
+    cursor.execute(sql,Value)             
     conn.commit()
 
-#Make array with some standard cars in it
-arrayCars = ['merc', 'volvo', 'bmw']
+
+def deleteCar(LineRequest,Table,Collum):
+	sql = ('''delete from %s where (%s) = (%s)''')%(Table,Collum,LineRequest)
+	cursor.execute(sql)
+	conn.commit()
+
+def deleteName(LineRequest,Table,Collum):
+	sql = ('''delete from names_table where First_Name="Mike"''')
+	print(sql)
+	time.sleep(1)
+	cursor.execute('''delete from names_table where First_Name="234"''')
+	conn.commit()
+
 
 #Get car from array
 def getCar(LineRequest):
@@ -34,8 +40,8 @@ def getCar(LineRequest):
 #Write car to array
 def setCar(LineRequest, NewCar):
     cls()
-    number = 234
-    arrayCars[LineRequest] = NewCar
+    #number = 234
+    #rrayCars[LineRequest] = NewCar
     Insert(Table = 'names_table', Collum = 'First_Name', Value = NewCar)
 
 
@@ -52,8 +58,8 @@ def CheckLine(Command,Check):
 #Print total Array
 def ShowList():
     cls()
-    for (index,item) in enumerate (arrayCars, start = 0):
-        print(index,':',item)
+    #for (index,item) in enumerate (arrayCars, start = 0):
+    #    print(index,':',item)
 
     cursor.execute('select * from names_table')
     for row in cursor.fetchall():
@@ -82,22 +88,32 @@ def EnterCommand():
     #-----Wait for user command-----#
     if CheckCommand(UserCommand,'r'):
         LineRequest = input('enter line request:')
-        if CheckLine(LineRequest, len(arrayCars)):
+        if CheckLine(LineRequest,100):
             getCar(int(LineRequest))
         else:
             TryAgain()
     if CheckCommand(UserCommand,'e'):
         LineRequest = input('enter line to edit:')
-        if CheckLine(LineRequest, len(arrayCars)):
+        if CheckLine(LineRequest,100):
             NewCar = input('enter new Car brand:')
             setCar(int(LineRequest),NewCar)
         else:
             TryAgain()
     if CheckCommand(UserCommand,'l'):
             ShowList()
+
+    if CheckCommand(UserCommand,'d'):
+        LineRequest = input('enter line to delete:')
+        if CheckLine(LineRequest,100):
+            deleteCar(LineRequest,Table='names_table',Collum ='Id')
+        else:
+            TryAgain()
+    if CheckCommand(UserCommand,'f'):
+        LineRequest = input('enter name to delete:')
+        deleteName(LineRequest,Table='names_table',Collum ='First_Name')
     else:
         TryAgain()
-        
+
 #Main    
 EnterCommand()
 
