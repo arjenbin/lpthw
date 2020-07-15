@@ -63,6 +63,22 @@ def CurSelect(evt):
                  print(item[1])
                  return item[1]
 
+def make_a_listbox_with_names(mylistbox):
+
+    mylistbox=Listbox(root,width=15,height=10,font=('times',13))
+    mylistbox.bind('<<ListboxSelect>>',CurSelect)
+    mylistbox.place(x=32,y=90)
+    itemsforlistbox=[]
+    itemsforcode=[]
+
+    #Get usernames from database
+    cursor.execute("select VoorNaam,Naam,PersoneelNum from Personeel")
+    for row in cursor.fetchall():
+        personeelsNaam = (row.VoorNaam)+(' ')+(row.Naam)
+        itemsforlistbox.append(personeelsNaam)
+        itemsforcode.append ([personeelsNaam,row.PersoneelNum])
+    for items in itemsforlistbox:
+        mylistbox.insert(END,items)
 
 def BuildUI():
     root= Tk()
@@ -126,31 +142,9 @@ def BuildUI():
  
     root.wm_geometry("%dx%d+%d+%d" % (sizex, sizey, posx, posy))
 
+    make_a_listbox_with_names(root)
 
 
-    #Make a listbox with names
-    mylistbox=Listbox(root,width=15,height=10,font=('times',13))
-    mylistbox.bind('<<ListboxSelect>>',CurSelect)
-    mylistbox.place(x=32,y=90)
-
-
-
-
-
-
-
-itemsforlistbox=[]
-itemsforcode=[]
-
-#Get usernames from database
-cursor.execute("select VoorNaam,Naam,PersoneelNum from Personeel")
-for row in cursor.fetchall():
-    personeelsNaam = (row.VoorNaam)+(' ')+(row.Naam)
-    itemsforlistbox.append(personeelsNaam)
-    itemsforcode.append ([personeelsNaam,row.PersoneelNum])
-
-for items in itemsforlistbox:
-    mylistbox.insert(END,items)
 
 
 
