@@ -57,7 +57,7 @@ def CurSelect2():
                  return item[1]
 
 def CurSelect(evt):
-    value= r
+    value=root.mylistbox.get(mylistbox.curselection())
     for item in itemsforcode:
             if value in item[0]:
                  print(item[1])
@@ -79,6 +79,8 @@ def make_a_listbox_with_names(root):
         itemsforcode.append ([personeelsNaam,row.PersoneelNum])
     for items in itemsforlistbox:
         mylistbox.insert(END,items)
+    
+    return itemsforcode, mylistbox
 
 def BuildUI():
     root= Tk()
@@ -142,10 +144,8 @@ def BuildUI():
  
     root.wm_geometry("%dx%d+%d+%d" % (sizex, sizey, posx, posy))
 
-    root.mylistbox = make_a_listbox_with_names(root)
-
-    return root
-    return itemsforcode, mylistbox
+    itemsforcode, root.mylistbox = make_a_listbox_with_names(root)
+    return itemsforcode, root
 
 
 
