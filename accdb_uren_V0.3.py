@@ -50,7 +50,7 @@ def Enterwork():
 
 
 def CurSelect2():
-    value=(mylistbox.get(mylistbox.curselection()))
+    value=root.mylistbox.get(mylistbox.curselection())
     for item in itemsforcode:
             if value in item[0]:
                  print(item[1])
@@ -63,7 +63,7 @@ def CurSelect(evt):
                  print(item[1])
                  return item[1]
 
-def make_a_listbox_with_names(mylistbox):
+def make_a_listbox_with_names(root):
 
     mylistbox=Listbox(root,width=15,height=10,font=('times',13))
     mylistbox.bind('<<ListboxSelect>>',CurSelect)
@@ -142,7 +142,7 @@ def BuildUI():
  
     root.wm_geometry("%dx%d+%d+%d" % (sizex, sizey, posx, posy))
 
-    make_a_listbox_with_names(root)
+    root.mylistbox = make_a_listbox_with_names(root)
 
 
 
