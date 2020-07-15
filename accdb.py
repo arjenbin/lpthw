@@ -3,12 +3,7 @@ import time
 import pyodbc
 import sys
 
-laptopdbpath ='D:/Users/Gebruiker/Documents/Python/TestDB.accdb'
-pcdbpath = 'C:/Users/Gebruiker/lpthw/TestDB.accdb'
-
-print(laptopdbpath)
-conn = pyodbc.connect(r'Driver={Microsoft Access Driver (*.mdb, *.accdb)};DBQ=D:/Users/Gebruiker/Documents/Python/Erp4.accdb')
-print("ConnectionPrint",conn)
+conn = pyodbc.connect(r'Driver={Microsoft Access Driver (*.mdb, *.accdb)};DBQ=C:\Users\Gebruiker\lpthw\TestDB.accdb;')
 cursor = conn.cursor()
 
 
@@ -28,11 +23,10 @@ def deleteCar(LineRequest,Table,Collum):
 	conn.commit()
 
 def deleteName(LineRequest,Table,Collum):
-	sql = ('''delete from %s where (%s) in ('%s')''')%(Table,Collum,LineRequest)
+	sql = ('''delete from names_table where First_Name="Mike"''')
 	print(sql)
 	time.sleep(1)
-	#cursor.execute('''delete from names_table where First_Name in ('Tom')''')
-	cursor.execute(sql)
+	cursor.execute('''delete from names_table where First_Name="234"''')
 	conn.commit()
 
 
@@ -62,15 +56,14 @@ def CheckLine(Command,Check):
     return int(Command) < Check
 
 #Print total Array
-def ShowList(Table,Collum):
+def ShowList():
     cls()
+    #for (index,item) in enumerate (arrayCars, start = 0):
+    #    print(index,':',item)
 
-    sql = ('''select * from %s where %s = True''')%(Table,Collum)
-    print(sql)
-    #cursor.execute('select * from names_table')
-    cursor.execute(sql)
+    cursor.execute('select * from names_table')
     for row in cursor.fetchall():
-        print (row.ProjectNummer,row.Omschrijving)    
+        print (row.Id,row.First_Name)    
     EnterCommand()
 
 #Try again message
@@ -90,8 +83,6 @@ def EnterCommand():
     '-----------------\n'
     'Request Car = R\n'
     'Edit Car = E\n'
-    'Delete Name = DN\n'
-    'Delete Line = DL\n'
     'Show List = L\n')
     
     #-----Wait for user command-----#
@@ -109,15 +100,15 @@ def EnterCommand():
         else:
             TryAgain()
     if CheckCommand(UserCommand,'l'):
-            ShowList(Table = 'Projecten',Collum ='Actief')
+            ShowList()
 
-    if CheckCommand(UserCommand,'dl'):
+    if CheckCommand(UserCommand,'d'):
         LineRequest = input('enter line to delete:')
         if CheckLine(LineRequest,100):
             deleteCar(LineRequest,Table='names_table',Collum ='Id')
         else:
             TryAgain()
-    if CheckCommand(UserCommand,'dn'):
+    if CheckCommand(UserCommand,'f'):
         LineRequest = input('enter name to delete:')
         deleteName(LineRequest,Table='names_table',Collum ='First_Name')
     else:
