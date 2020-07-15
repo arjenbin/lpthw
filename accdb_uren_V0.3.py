@@ -57,7 +57,7 @@ def CurSelect2():
                  return item[1]
 
 def CurSelect(evt):
-    value= evt.widget
+    value= r
     for item in itemsforcode:
             if value in item[0]:
                  print(item[1])
@@ -144,13 +144,13 @@ def BuildUI():
 
     root.mylistbox = make_a_listbox_with_names(root)
 
-
-
+    return root
+    return itemsforcode, mylistbox
 
 
 
 
 #Main
-BuildUI()
+itemsforcode, root = BuildUI()
 mainloop()
 
