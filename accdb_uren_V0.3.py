@@ -30,13 +30,13 @@ def Insert(Table,Tijdnummer,PersoneelNaam,Date,Projectnummer,Activiteitnummer,Ur
 
 
 def Enterwork():
-    tijdnummer = entrytimenumber.get()
+    tijdnummer = root.entrytimenumber.get()
     personeelnummer = CurSelect2()
-    datum = entrydate.get()
-    projectnummer = entryprojectnumber.get()
-    activiteitnum = entryactiviteitnum.get()
-    duur = entryduur.get()
-    werk = entrywerk.get()
+    datum = root.entrydate.get()
+    projectnummer = root.entryprojectnumber.get()
+    activiteitnum = root.entryactiviteitnum.get()
+    duur = root.entryduur.get()
+    werk = root.entrywerk.get()
 
 
     Insert(Table = 'TijdVerantwoording',
@@ -50,14 +50,16 @@ def Enterwork():
 
 
 def CurSelect2():
-    value=root.mylistbox.get(mylistbox.curselection())
+    m=root.mylistbox
+    value=m.get(m.curselection())
     for item in itemsforcode:
             if value in item[0]:
                  print(item[1])
                  return item[1]
 
 def CurSelect(evt):
-    value=root.mylistbox.get(mylistbox.curselection())
+    m=root.mylistbox
+    value=m.get(m.curselection())
     for item in itemsforcode:
             if value in item[0]:
                  print(item[1])
@@ -78,8 +80,7 @@ def make_a_listbox_with_names(root):
         itemsforlistbox.append(personeelsNaam)
         itemsforcode.append ([personeelsNaam,row.PersoneelNum])
     for items in itemsforlistbox:
-        mylistbox.insert(END,items)
-    
+        mylistbox.insert(END,items)   
     return itemsforcode, mylistbox
 
 def BuildUI():
@@ -104,8 +105,8 @@ def BuildUI():
     
     root.label=Label(root,text="Voer tijdnummer (urensoort) in:")
     root.label.pack()
-    entrytimenumber = Entry(root)
-    entrytimenumber.pack()
+    root.entrytimenumber = Entry(root)
+    root.entrytimenumber.pack()
 
     root.label=Label(root,text="Voer personeel nummer in")
     root.label.pack()
@@ -114,28 +115,28 @@ def BuildUI():
 
     root.label=Label(root,text="Voer datum in (d-m-yyy)")
     root.label.pack()
-    entrydate = Entry(root)
-    entrydate.pack()
+    root.entrydate = Entry(root)
+    root.entrydate.pack()
 
     root.label=Label(root,text="Voer Projectnummer in")
     root.label.pack()
-    entryprojectnumber = Entry(root)
-    entryprojectnumber.pack()   
+    root.entryprojectnumber = Entry(root)
+    root.entryprojectnumber.pack()   
 
     root.label=Label(root,text="Enter Activity number")
     root.label.pack()
-    entryactiviteitnum = Entry(root)
-    entryactiviteitnum.pack()
+    root.entryactiviteitnum = Entry(root)
+    root.entryactiviteitnum.pack()
 
     root.label=Label(root,text="Aantal uur")
     root.label.pack()
-    entryduur = Entry(root)
-    entryduur.pack()
+    root.entryduur = Entry(root)
+    root.entryduur.pack()
 
     root.label=Label(root,text="Wat heb je gedaan?")
     root.label.pack()
-    entrywerk = Entry(root)
-    entrywerk.pack()
+    root.entrywerk = Entry(root)
+    root.entrywerk.pack()
 
   
     root.Enterbutton=Button(root, text ="Enter", command = Enterwork)
