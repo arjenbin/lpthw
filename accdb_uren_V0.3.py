@@ -148,14 +148,14 @@ def BuildUI():
     root.mylistbox = make_a_listbox_with_names(root)
 
     #itemsforcode, root.mylistbox = make_a_listbox_with_names(root)
-    #return itemsforcode, root
+    return itemsforcode, root
     return root
 
 
 
 
 #Main
-#itemsforcode, root = BuildUI()
-#root = BuildUI()
+itemsforcode, root = BuildUI()
+root = BuildUI()
 mainloop()
 
