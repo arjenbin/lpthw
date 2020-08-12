@@ -145,13 +145,17 @@ def BuildUI():
  
     root.wm_geometry("%dx%d+%d+%d" % (sizex, sizey, posx, posy))
 
-    itemsforcode, root.mylistbox = make_a_listbox_with_names(root)
-    return itemsforcode, root
+    root.mylistbox = make_a_listbox_with_names(root)
+
+    #itemsforcode, root.mylistbox = make_a_listbox_with_names(root)
+    #return itemsforcode, root
+    return root
 
 
 
 
 #Main
-itemsforcode, root = BuildUI()
+#itemsforcode, root = BuildUI()
+#root = BuildUI()
 mainloop()
 
