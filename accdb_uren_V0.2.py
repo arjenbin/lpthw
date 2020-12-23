@@ -49,19 +49,19 @@ def Enterwork():
            Opmerking = werk,)
 
 
-def CurSelect2():
-    value=(mylistbox.get(mylistbox.curselection()))
-    for item in itemsforcode:
-            if value in item[0]:
-                 print(item[1])
-                 return item[1]
+#def CurSelect2():
+#    value=(mylistbox.get(mylistbox.curselection()))
+#    for item in itemsforcode:
+#            if value in item[0]:
+#                 print(item[1])
+#                 return item[1]
 
-def CurSelect(evt):
-    value= evt.widget
-    for item in itemsforcode:
-            if value in item[0]:
-                 print(item[1])
-                 return item[1]
+#def CurSelect(evt):
+#   value= evt.widget
+#    for item in itemsforcode:
+#            if value in item[0]:
+#                 print(item[1])
+#                 return item[1]
 
 
 def BuildUI():
@@ -126,12 +126,50 @@ def BuildUI():
  
     root.wm_geometry("%dx%d+%d+%d" % (sizex, sizey, posx, posy))
 
+    
+
 
 
     #Make a listbox with names
-    mylistbox=Listbox(root,width=15,height=10,font=('times',13))
-    mylistbox.bind('<<ListboxSelect>>',CurSelect)
-    mylistbox.place(x=32,y=90)
+    #mylistbox=Listbox(root,width=15,height=10,font=('times',13))
+    #mylistbox.bind('<<ListboxSelect>>',CurSelect)
+    #mylistbox.place(x=32,y=90)
+	
+    #itemsforlistbox=[]
+    #itemsforcode=[]
+
+    #def CurSelect(evt):
+    #	value= evt.widget
+    #	for item in itemsforcode:
+    #        if value in item[0]:
+    #            print(item[1])
+    #            return item[1]
+
+    #Get usernames from database
+    #cursor.execute("select VoorNaam,Naam,PersoneelNum from Personeel")
+    #for row in cursor.fetchall():
+    #	personeelsNaam = (row.VoorNaam)+(' ')+(row.Naam)
+    #	itemsforlistbox.append(personeelsNaam)
+    #	itemsforcode.append ([personeelsNaam,row.PersoneelNum])
+
+    #for items in itemsforlistbox:
+    #	mylistbox.insert(END,items)
+
+
+    mylistbox=Listbox(root,width=40,height=10,font=('times',13))
+    mylistbox.place(x=0,y=0)
+
+    cursor.execute("select Opmerking from TijdVerantwoording")
+    for row in cursor.fetchall():
+    	mylistbox.insert(END,row.Opmerking)
+
+   
+
+
+
+
+
+	
 
 
 
@@ -139,18 +177,11 @@ def BuildUI():
 
 
 
-itemsforlistbox=[]
-itemsforcode=[]
 
-#Get usernames from database
-cursor.execute("select VoorNaam,Naam,PersoneelNum from Personeel")
-for row in cursor.fetchall():
-    personeelsNaam = (row.VoorNaam)+(' ')+(row.Naam)
-    itemsforlistbox.append(personeelsNaam)
-    itemsforcode.append ([personeelsNaam,row.PersoneelNum])
 
-for items in itemsforlistbox:
-    mylistbox.insert(END,items)
+
+
+
 
 
 

@@ -155,7 +155,7 @@ def BuildUI():
 
 
 #Main
-itemsforcode, root = BuildUI()
+#itemsforcode, root = BuildUI()
 root = BuildUI()
 mainloop()
 
